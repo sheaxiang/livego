@@ -158,13 +158,13 @@ func (f *FlvDvr) GetWriter(info av.Info) av.WriteCloser {
 
 	flvDir := configure.Config.GetString("flv_dir")
 
-	err := os.MkdirAll(path.Join(flvDir, paths[0]), 0755)
+	err := os.MkdirAll(path.Join(flvDir, info.Key), 0755)
 	if err != nil {
 		log.Error("mkdir error: ", err)
 		return nil
 	}
 
-	fileName := fmt.Sprintf("%s_%d.%s", path.Join(flvDir, info.Key), time.Now().Unix(), "flv")
+	fileName := fmt.Sprintf("%s_%d.%s", path.Join(flvDir, info.Key, paths[1]), time.Now().Unix(), "flv")
 	log.Debug("flv dvr save stream to: ", fileName)
 	w, err := os.OpenFile(fileName, os.O_CREATE|os.O_RDWR, 0755)
 	if err != nil {
